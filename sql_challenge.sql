@@ -13,8 +13,6 @@ GROUP BY exchanges_unnest
 ;
 
 
-
-
 -- (2) Show all exchanges containing the letter 'x'
 WITH coins_cte AS (
     SELECT *,
