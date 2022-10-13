@@ -64,6 +64,13 @@ def coins_rest():
 
     Call from coin-spewer Rust application:
         cargo run -- -e http://localhost:5004/coins -r 10 -p 1 -d 1000
+
+    Inputs:
+        POST request input contains list of coin ids either in JSON or CSV format
+
+    Returns:
+        Completion message as {"message": "completed"}, but the backend table gets the data saved
+        for each coin/id.
     """
     # checks for the content-type JSON and CSV
     # and constructs the list of ids to coins_list
