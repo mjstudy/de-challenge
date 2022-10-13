@@ -52,11 +52,14 @@ challenge_db-# ;
 ### docker-compose
 docker-compose contains two services, one for the app/api and another for the db. Each service points to its own Dockerfile
 
-### Backend table:
+### Backend table
 * DB name: `challenge_db` (as per `db/schema.sql`)
-* Table name:  `CoinsModel` model class in `app.py` contains the schema of `coins` table.
+* Table name:  [CoinsModel](https://github.com/mjstudy/de-challenge/blob/main/app.py#L22) model class in `app.py` contains the schema of `coins` table. `exchanges` columns is stored as `ARRAY` type.
 
-### Notes:
+### SQL challenge
+Both SQL challenge queries are in [sql_challenge.sql](https://github.com/mjstudy/de-challenge/blob/main/sql_challenge.sql)
+
+### Notes
 * **Primary key in backend table:** currently, task_run column is the primary key with auto-increment feature. In production setting, if the requirement is to fail any attempt to insert duplicate `coin`/`id` record to the table, then physically setting a `UNIQUE` constraint or `composite primary key` would be ideal.
 * **Throttling:** current quick implementation for rate-limit/throttling is by using flask_limiter package and applying the limit as a decorator to the route function. Once the request limit mentioned in the `@limiter.limit` decorator is reached, response code `429` will be generated from the API.
 * **Exponential back-off**: CoinGecko gives `429` rate-limit response once its threshold is reached. The API can be coded to minimize the 429 from CoinGecko using an exponential back-off logic, but it will increase the overall response time to the end user PID (more than 400ms). So, such logic has not been implemented. 
